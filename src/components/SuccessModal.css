@@ -1,0 +1,39 @@
+.success-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 30px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 450px;
+    z-index: 100;
+  }
+  
+  .modal-image {
+    width: 100%;
+    max-height: 350px;
+    margin-bottom: 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+  }
+  
+  .modal-text {
+    margin-bottom: 20px;
+  }
+  
+  .modal-text p {
+    font-size: 38px;
+    font-weight: bolder;
+    margin-bottom: 10px;
+  }
+  
+  .close-button {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    background: none;
+    border: none;
+    font-size: 25px;
+    cursor: pointer;
+  }

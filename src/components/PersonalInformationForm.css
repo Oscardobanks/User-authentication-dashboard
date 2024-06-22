@@ -1,0 +1,79 @@
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .header span{
+    color: #3ad540;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input[type="text"],
+  input[type="tel"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .error-message {
+    color: red;
+    font-size: 12px;
+  }
+  
+  .radio-group {
+    display: flex;
+    align-items: center;
+  }
+  
+  .radio-group label {
+    margin-right: 20px;
+  }
+  
+  input[type="radio"] {
+    width: 15px;
+  }
+  
+  .phone-number-input {
+    display: flex;
+    align-items: center;
+  }
+  
+  .country-code {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+  }
+  
+  .country-code-arrow {
+    width: 15px;
+    height: 15px;
+    border-left: 3px solid #ccc;
+    border-bottom: 3px solid #ccc;
+    transform: rotate(45deg);
+    margin-left: 5px;
+  }
+  
+  .birthday-input {
+    display: flex;
+    align-items: center;
+  }
+  
+  .optional {
+    position: absolute;
+    top: 12px;
+    right: 40px;
+    margin-left: 10px;
+    color: #888;
+  }
+  
+  
+  .birthday-info {
+    margin-top: 5px;
+    font-size: 12px;
+    color: #888;
+  }

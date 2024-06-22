@@ -1,0 +1,64 @@
+.form-header h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .step-indicator {
+    font-size: 14px;
+    color: #673AB7; /* Purple color */
+  }
+  
+  .close-button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .form-body {
+    margin-bottom: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+    position: relative;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+  
+  .Optional {
+    position: absolute;
+    top: 35px;
+    right: 15px;
+    font-size: 16px;
+    color: #afafaf;
+    margin-left: 10px;
+  }
+  
+  .form-group-row {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    padding-bottom: 80px;
+  }
+  
+  .error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+  }
