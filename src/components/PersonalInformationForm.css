@@ -1,5 +1,6 @@
   .form-group {
     margin-bottom: 20px;
+    position: relative;
   }
 
   .header span{
@@ -35,42 +36,37 @@
   }
   
   input[type="radio"] {
-    width: 15px;
+    width: 20px;
   }
   
-  .phone-number-input {
-    display: flex;
-    align-items: center;
+  .form-group i,
+  .form-group i {
+    transform: translateY(-14px);
+    font-size: 0.8em;
   }
-  
-  .country-code {
-    display: flex;
-    align-items: center;
-    margin-right: 10px;
+
+  .personal-check-icon{
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    color: #4caf50;
   }
-  
-  .country-code-arrow {
-    width: 15px;
-    height: 15px;
-    border-left: 3px solid #ccc;
-    border-bottom: 3px solid #ccc;
-    transform: rotate(45deg);
-    margin-left: 5px;
-  }
-  
-  .birthday-input {
-    display: flex;
-    align-items: center;
+
+  .phone-prefix{
+    width: 35%;
   }
   
   .optional {
     position: absolute;
-    top: 12px;
+    top: 15px;
     right: 40px;
     margin-left: 10px;
     color: #888;
   }
-  
+
+  .form-group .birthday{
+    padding: 20px 10px 7.5px;
+  }
   
   .birthday-info {
     margin-top: 5px;

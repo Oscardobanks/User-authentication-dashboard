@@ -10,9 +10,12 @@ import "./LoginForm.css";
 import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../auth/firebase";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'
 
 const LoginForm = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -33,13 +36,24 @@ const LoginForm = () => {
 
   return (
     <div className="login-form">
+      <ToastContainer />
       <Formik
         initialValues={{ email: "", password: "" }}
         validationSchema={validationSchema}
-        onSubmit={(values, { setSubmitting }) => {
-          signInWithEmailAndPassword(auth, values.email, values.password);
-          alert("User Logged in Successfully!!");
-          setSubmitting(false);
+        onSubmit={async (values, { setSubmitting }) => {
+          setIsLoading(true)
+          try {
+            await signInWithEmailAndPassword(auth, values.email, values.password);
+            navigate('/dashboard')
+            toast.success("User Logged in Successfully!!");
+            setSubmitting(false);
+          } catch (error) {
+            console.log('Logging Failed: ', error);
+            toast.error(error.message);
+            setSubmitting(false);
+          } finally {
+            setIsLoading(false);
+          }
         }}
       >
         {({ isSubmitting }) => (
@@ -96,18 +110,13 @@ const LoginForm = () => {
                     </button>
                   </div>
                 </div>
-                <div className="password-icons">
-                  <button type="button" onClick={togglePasswordVisibility}>
-                    <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
-                  </button>
-                </div>
               </div>
               <button
                 type="submit"
                 className="create-account-button"
-                disabled={isSubmitting}
+                disabled={isSubmitting || isLoading}
               >
-                Login to Dashboard
+                {isLoading ? 'Logging in....' : 'Login to Dashboard' }
               </button>
               <div className="checkbox-group">
                 <Field type="checkbox" name="rememberMe" id="rememberMe" />

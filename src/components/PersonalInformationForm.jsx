@@ -8,14 +8,12 @@ import {
   faInfoCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import "./PersonalInformationForm.css";
+import PhonePrefixDropdown from "./PhonePrefixDropdown";
 
 const PersonalInformationForm = ({ handleNextStep, handlePreviousStep }) => {
-  const handleSave = (values) => {
-    handleNextStep(values);
-  };
 
   PersonalInformationForm.propTypes = {
-    handleNextStep: PropTypes.object.isRequired,
+    handleNextStep: PropTypes.func.isRequired,
     handlePreviousStep: PropTypes.func.isRequired,
   };
 
@@ -23,8 +21,8 @@ const PersonalInformationForm = ({ handleNextStep, handlePreviousStep }) => {
     fullName: Yup.string().required("Full name is required"),
     gender: Yup.string().required("Please select a gender"),
     phoneNumber: Yup.string()
-      .matches(/^\+?[0-9]+$/, "Invalid phone number")
-      .required("Required"),
+      .matches(/^\+?[0-9]+$/, "Invalid phone number").min(7, "Invalid phone number")
+      .required("Phone Number is Required"),
     birthday: Yup.date(), // You can add more validation for birthday if needed
   });
 
@@ -46,11 +44,14 @@ const PersonalInformationForm = ({ handleNextStep, handlePreviousStep }) => {
         initialValues={{
           fullName: "",
           gender: "Male",
+          phonePrefix: "",
           phoneNumber: "",
           birthday: "",
         }}
         validationSchema={validationSchema}
-        onSubmit={handleSave}
+        onSubmit={(values, { setSubmitting }) => {
+          setSubmitting(false);
+        }}
       >
         {({ isSubmitting, touched, errors }) => (
           <Form>
@@ -61,16 +62,16 @@ const PersonalInformationForm = ({ handleNextStep, handlePreviousStep }) => {
                 id="fullName"
                 placeholder="Full name"
               />
+              {touched.fullName && !errors.fullName && (
+                <span className="personal-check-icon">
+                  <FontAwesomeIcon icon={faCheck} />
+                </span>
+              )}
               <ErrorMessage
                 name="fullName"
                 component="div"
                 className="error-message"
               />
-              {touched.fullName && !errors.fullName && (
-                <span className="check-icon">
-                  <FontAwesomeIcon icon={faCheck} />
-                </span>
-              )}
             </div>
             <div className="form-group flex gap-4 items-center">
               <label htmlFor="gender">Gender:</label>
@@ -92,33 +93,34 @@ const PersonalInformationForm = ({ handleNextStep, handlePreviousStep }) => {
                 The phone number and birthday are only visible to you
               </span>
             </div>
-            <div className="form-group flex gap-2">
-              <div className="phone-prefix">
-                <Field type="number" name="phonePrefix" placeholder="+598" />
-              </div>
+            <div className="form-group">
+              <div className="flex gap-2">
+              <PhonePrefixDropdown />
               <Field
                 type="number"
                 name="phoneNumber"
                 id="phoneNumber"
                 placeholder="Phone number"
               />
+              {touched.phoneNumber && !errors.phoneNumber && (
+                <span className="personal-check-icon">
+                  <FontAwesomeIcon icon={faCheck} />
+                </span>
+              )}
+              </div>
               <ErrorMessage
                 name="phoneNumber"
                 component="div"
                 className="error-message"
               />
-              {touched.phoneNumber && !errors.phoneNumber && (
-                <span className="check-icon">
-                  <FontAwesomeIcon icon={faCheck} />
-                </span>
-              )}
             </div>
             <div className="form-group mb-10">
+              <i htmlFor="birthday">Birthday</i>
               <Field
                 type="date"
                 name="birthday"
                 id="birthday"
-                placeholder="Birthday"
+                className="birthday"
               />
               <ErrorMessage
                 name="birthday"

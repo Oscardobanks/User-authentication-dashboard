@@ -124,15 +124,6 @@
   font-size: 12px;
 }
 
-.form-group input:focus {
-  outline: none;
-  border-color: #6200ee;
-}
-
-.form-group input::placeholder {
-  color: #ccc;
-}
-
 .form-group i {
   position: absolute;
   left: 0;

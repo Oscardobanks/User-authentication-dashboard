@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useFormikContext } from "formik";
 import RegistrationForm from "./pages/register/RegistrationForm";
 import PersonalInformationForm from "./components/PersonalInformationForm";
 import { useState } from "react";
@@ -8,18 +7,14 @@ import AddAddressSearch from "./components/AddAddressSearch";
 import SuccessModal from "./components/SuccessModal";
 import LoginForm from "./pages/login/LoginForm.jsx";
 import DashboardPage from "./pages/dashboard/DashboardPage.jsx";
-import {ToastContainer} from 'react-toastify'
+import { ToastContainer } from "react-toastify";
 import "./App.css";
 
 function App() {
   const [currentStep, setCurrentStep] = useState(1);
-  // const [formData, setFormData] = useState({});
-  const formikContext = useFormikContext();
 
   const handleNextStep = () => {
     setCurrentStep(currentStep + 1);
-    // setFormData({ ...formData, ...formikContext.values });
-    console.log("Form details: ", formikContext.values);
   };
 
   const handlePreviousStep = () => {
@@ -29,11 +24,12 @@ function App() {
   return (
     <BrowserRouter>
       <div className={!Routes ? "container" : undefined}>
+        <ToastContainer />
         <Routes>
           <Route
             path="/"
             element={
-              <div className={currentStep !== 4 && "form"}>
+              <div className={currentStep !== 5 && "form"}>
                 {currentStep === 1 && (
                   <RegistrationForm handleNextStep={handleNextStep} />
                 )}
@@ -45,7 +41,7 @@ function App() {
                 )}
                 {currentStep === 3 && (
                   <AddAddressSearch
-                    handleNextStep={setCurrentStep(currentStep + 1)}
+                    handleNextStep={handleNextStep}
                     handlePreviousStep={handlePreviousStep}
                   />
                 )}
@@ -55,15 +51,15 @@ function App() {
                     handlePreviousStep={handlePreviousStep}
                   />
                 )}
+                {currentStep === 5 && (
+                  <SuccessModal handlePreviousStep={handlePreviousStep} />
+                )}
               </div>
             }
           />
-          {currentStep === 5 && (
-            <SuccessModal handlePreviousStep={handlePreviousStep} />
-          )}
+
           <Route path="/login" element={<LoginForm />} />
         </Routes>
-          <ToastContainer />
       </div>
       <Routes>
         <Route path="/dashboard" element={<DashboardPage />} />

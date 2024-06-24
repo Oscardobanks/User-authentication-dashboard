@@ -7,7 +7,7 @@ import './AddAddressForm.css';
 
 const AddAddressForm = ({handleNextStep, handlePreviousStep}) => {
   AddAddressForm.propTypes = {
-    handleNextStep: PropTypes.object.isRequired,
+    handleNextStep: PropTypes.func.isRequired,
     handlePreviousStep: PropTypes.func.isRequired,
   };
 
@@ -24,8 +24,8 @@ const AddAddressForm = ({handleNextStep, handlePreviousStep}) => {
   });
 
   return (
-    <div className="add-address-form">
-      <div className="header pb-10">
+    <div>
+      <div className="header pb-8">
       <div className="flex gap-5 items-center font-bold">
           <p className="text-xl pb-1">Add address</p>
           <span>3 of 3</span>

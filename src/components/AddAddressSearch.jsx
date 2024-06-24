@@ -1,11 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PropTypes from "prop-types";
-import { faClock, faClose, faDollar, faLocationDot, faPeopleGroup, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faClock, faClose, faDollar, faLocationDot, faSearch, faUserGroup } from "@fortawesome/free-solid-svg-icons";
 import "./AddAddressSearch.css";
 
 const AddAddressSearch = ({ handleNextStep, handlePreviousStep }) => {
   AddAddressSearch.propTypes = {
-    handleNextStep: PropTypes.object.isRequired,
+    handleNextStep: PropTypes.func.isRequired,
     handlePreviousStep: PropTypes.func.isRequired,
   };
 
@@ -21,7 +21,7 @@ const AddAddressSearch = ({ handleNextStep, handlePreviousStep }) => {
         </button>
       </div>
       <div className="form-body">
-        <div className="search-bar">
+        <div className="search-bar border-2 border-gray-200 rounded-lg">
           <FontAwesomeIcon icon={faSearch} className="search-icon"/>
           <input type="text" placeholder="Search for address"/>
         </div>
@@ -42,7 +42,7 @@ const AddAddressSearch = ({ handleNextStep, handlePreviousStep }) => {
         <p className="text-xl pb-5 font-bold">Sharing your address shows:</p>
         <ul className="flex flex-col gap-2">
           <li className="flex gap-2 items-center">
-          <FontAwesomeIcon icon={faPeopleGroup} className="w-5" />
+          <FontAwesomeIcon icon={faUserGroup} className="w-5" />
             People near you
           </li>
           <li className="flex gap-2 items-center">

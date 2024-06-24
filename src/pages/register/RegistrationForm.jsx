@@ -16,9 +16,12 @@ import "./RegistrationForm.css";
 import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../auth/firebase";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'
 
 const RegistrationForm = ({ handleNextStep }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -43,12 +46,23 @@ const RegistrationForm = ({ handleNextStep }) => {
 
   return (
     <div className="">
+      <ToastContainer />
       <Formik
         initialValues={{ email: "", password: "" }}
         validationSchema={validationSchema}
-        onSubmit={(values) => {
-            createUserWithEmailAndPassword(auth, values.email, values.password);
-            handleNextStep();
+        onSubmit={async (values, {setSubmitting}) => {
+            setIsLoading(true);
+            try {
+              await createUserWithEmailAndPassword(auth, values.email, values.password);
+              handleNextStep();
+              setSubmitting(false)
+            } catch (error) {
+              console.error('Registration Failed: ', error);
+              toast.error(error.message);
+              setSubmitting(false);
+            } finally {
+              setIsLoading(false);
+            }
         }}
       >
         {({ isSubmitting, touched, errors }) => (
@@ -130,9 +144,9 @@ const RegistrationForm = ({ handleNextStep }) => {
               <button
                 type="submit"
                 className="create-account-button"
-                disabled={isSubmitting}
+                disabled={isSubmitting || isLoading}
               >
-                Create account
+                {isLoading ? 'Registering....' : 'Create account' }
               </button>
               <div className="checkbox-group">
                 <Field type="checkbox" name="newsletter" id="newsletter" />

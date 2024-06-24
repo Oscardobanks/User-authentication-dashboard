@@ -16,10 +16,6 @@
     cursor: pointer;
   }
   
-  .form-body {
-    margin-bottom: 20px;
-  }
-  
   .form-group {
     margin-bottom: 15px;
     position: relative;
@@ -54,7 +50,7 @@
     display: flex;
     gap: 10px;
     justify-content: space-between;
-    padding-bottom: 80px;
+    padding-bottom: 40px;
   }
   
   .error-message {
