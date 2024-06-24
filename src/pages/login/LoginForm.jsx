@@ -38,7 +38,7 @@ const LoginForm = () => {
         validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting }) => {
           signInWithEmailAndPassword(auth, values.email, values.password);
-          console.log("User Logged in Successfully!!");
+          alert("User Logged in Successfully!!");
           setSubmitting(false);
         }}
       >
