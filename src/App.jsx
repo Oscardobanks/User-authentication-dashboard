@@ -58,7 +58,7 @@ function App() {
             }
           />
 
-          <Route path="/login" element={<LoginForm />} />
+          <Route path="/login" element={<LoginForm setCurrentStep={setCurrentStep} />} />
         </Routes>
       </div>
       <Routes>

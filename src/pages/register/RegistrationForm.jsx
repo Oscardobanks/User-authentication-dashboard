@@ -11,17 +11,16 @@ import {
 import { useState } from "react";
 import googleLogo from "../../assets/search.svg";
 import PropTypes from "prop-types";
-
-import "./RegistrationForm.css";
 import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../auth/firebase";
 import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css'
+import "react-toastify/dist/ReactToastify.css";
+
+import "./RegistrationForm.css";
 
 const RegistrationForm = ({ handleNextStep }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -50,19 +49,28 @@ const RegistrationForm = ({ handleNextStep }) => {
       <Formik
         initialValues={{ email: "", password: "" }}
         validationSchema={validationSchema}
-        onSubmit={async (values, {setSubmitting}) => {
-            setIsLoading(true);
-            try {
-              await createUserWithEmailAndPassword(auth, values.email, values.password);
-              handleNextStep();
-              setSubmitting(false)
-            } catch (error) {
-              console.error('Registration Failed: ', error);
-              toast.error(error.message);
-              setSubmitting(false);
-            } finally {
-              setIsLoading(false);
+        onSubmit={async (values, { setSubmitting }) => {
+          try {
+            await createUserWithEmailAndPassword(
+              auth,
+              values.email,
+              values.password
+            );
+            handleNextStep();
+            setSubmitting(false);
+          } catch (error) {
+            let errorMessage = error.message;
+
+            // Extract the user-friendly message from Firebase error codes
+            if (error.code === "auth/email-already-in-use") {
+              errorMessage = "Email address is already in use.";
+            } else if (error.code === "auth/weak-password") {
+              errorMessage =
+                "Password is too weak. Please use a stronger password.";
             }
+            toast.error(errorMessage);
+            setSubmitting(false);
+          }
         }}
       >
         {({ isSubmitting, touched, errors }) => (
@@ -144,9 +152,9 @@ const RegistrationForm = ({ handleNextStep }) => {
               <button
                 type="submit"
                 className="create-account-button"
-                disabled={isSubmitting || isLoading}
+                disabled={isSubmitting}
               >
-                {isLoading ? 'Registering....' : 'Create account' }
+                Create account
               </button>
               <div className="checkbox-group">
                 <Field type="checkbox" name="newsletter" id="newsletter" />

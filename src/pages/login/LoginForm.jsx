@@ -5,15 +5,16 @@ import { faApple, faFacebookF } from "@fortawesome/free-brands-svg-icons";
 import { faClose, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import googleLogo from "../../assets/search.svg";
-
-import "./LoginForm.css";
+import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../auth/firebase";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
 
-const LoginForm = () => {
+import "./LoginForm.css";
+
+const LoginForm = ({setCurrentStep}) => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -21,10 +22,15 @@ const LoginForm = () => {
     setShowPassword(!showPassword);
   };
 
+  LoginForm.propTypes = {
+    setCurrentStep: PropTypes.func.isRequired,
+  }
+
   const navigate = useNavigate();
 
   const handleGoToRegister = () => {
-    navigate("/");
+    setCurrentStep(1)
+    navigate('/')
   };
 
   const validationSchema = Yup.object().shape({

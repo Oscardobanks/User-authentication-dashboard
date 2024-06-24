@@ -6,6 +6,7 @@ import modalImage from "../assets/onwards.png";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css'
+import { useState } from "react";
 
 const SuccessModal = ({ handlePreviousStep }) => {
   SuccessModal.propTypes = {
@@ -13,11 +14,15 @@ const SuccessModal = ({ handlePreviousStep }) => {
   };
 
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleGoToLogin = () => {
-    navigate('/login');
+    setIsLoading(true);
     toast.success("User Registered Successfully!!");
-  }
+    setTimeout(() => {
+      navigate('/login');
+    }, 3000);
+  };
 
   return (
     <div className="success-modal">
@@ -35,8 +40,8 @@ const SuccessModal = ({ handlePreviousStep }) => {
           <div className="modal-text">
             <p className="text-3xl">You are successfully registered!</p>
           </div>
-          <button type="submit" className="create-account-button" onClick={handleGoToLogin}>
-            Go to Login
+          <button type="submit" className="create-account-button" disabled={ isLoading} onClick={handleGoToLogin}>
+          {isLoading ? 'Registering....' : 'Go to Login' }
           </button>
         </div>
       </div>
