@@ -95,6 +95,7 @@ const LoginForm = () => {
                       />
                     </button>
                   </div>
+                  </div>
               </div>
               <button
                 type="submit"
