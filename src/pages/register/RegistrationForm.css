@@ -114,13 +114,14 @@
   margin-bottom: 5px;
 }
 
-.form-group input {
+.form-group .input {
+  position: relative;
   width: 100%;
-  padding: 12px 10px;
+  padding: 25px 10px 7.5px;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-sizing: border-box;
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .form-group input:focus {
@@ -130,6 +131,22 @@
 
 .form-group input::placeholder {
   color: #ccc;
+}
+
+.form-group i {
+  position: absolute;
+  left: 0;
+  padding: 15px 10px;
+  font-style: normal;
+  color: #8e8e8e;
+  transition: 0.5s;
+  pointer-events: none;
+}
+
+.form-group .input:focus + i,
+.form-group .input:valid + i {
+  transform: translateY(-7.5px);
+  font-size: 0.8em;
 }
 
 .email-check-icon {

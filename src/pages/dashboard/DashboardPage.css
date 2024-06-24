@@ -1,0 +1,37 @@
+@media (min-width: 500px) and (max-width: 800px) {
+  .dashboardBody {
+    width: 70%;
+  }
+}
+
+@media (max-width: 500px) {
+  .dashboardBody {
+    width: 85%;
+  }
+}
+
+table {
+  overflow: auto;
+}
+
+table th {
+  color: #cfcfcf;
+  padding: 0 50px;
+}
+
+table td {
+  background-color: #ffffff;
+  font-weight: 500;
+}
+
+tr {
+  border-bottom: 1px rgb(214, 214, 214) solid;
+}
+
+tbody {
+  margin: 0 50px;
+}
+
+.boxStyle {
+  background: linear-gradient(to top left, #34049a 10%, #b335d3 70%, #ffffff);
+}

@@ -57,6 +57,7 @@
   .search-bar input{
     padding-left: 45px;
     font-size: 18px;
+    border: none;
   }
 
   li{

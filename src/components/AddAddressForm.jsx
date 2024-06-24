@@ -48,8 +48,6 @@ const AddAddressForm = ({handleNextStep, handlePreviousStep}) => {
           }}
           validationSchema={validationSchema}
           onSubmit={(values, { setSubmitting }) => {
-            // Handle form submission here
-            console.log('Form values:', values);
             setSubmitting(false);
           }}
         >

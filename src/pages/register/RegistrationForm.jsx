@@ -10,12 +10,14 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import googleLogo from "../../assets/search.svg";
-import PropTypes from 'prop-types'
+import PropTypes from "prop-types";
 
 import "./RegistrationForm.css";
 import { useNavigate } from "react-router-dom";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../auth/firebase";
 
-const RegistrationForm = ({handleNextStep}) => {
+const RegistrationForm = ({ handleNextStep }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -23,14 +25,14 @@ const RegistrationForm = ({handleNextStep}) => {
   };
 
   RegistrationForm.propTypes = {
-    handleNextStep: PropTypes.object.isRequired,
+    handleNextStep: PropTypes.func.isRequired,
   };
 
   const navigate = useNavigate();
 
   const handleGoToLogin = () => {
-    navigate('/login');
-  }
+    navigate("/login");
+  };
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().email("Invalid email").required("Required"),
@@ -44,96 +46,105 @@ const RegistrationForm = ({handleNextStep}) => {
       <Formik
         initialValues={{ email: "", password: "" }}
         validationSchema={validationSchema}
-        onSubmit={(values, { setSubmitting }) => {
-          // Handle form submission logic here
-          console.log("Form values:", values);
-          setSubmitting(false);
+        onSubmit={(values) => {
+            createUserWithEmailAndPassword(auth, values.email, values.password);
+            handleNextStep();
         }}
       >
         {({ isSubmitting, touched, errors }) => (
           <Form>
             <div>
-                <div className="header">
-              <div className="auth-buttons">
-                <button className="register-button pb-3">Register</button>
-                <button className="log-in-button pb-3" onClick={handleGoToLogin}>Log in</button>
-              </div>
-              <button className="close-button pb-3 text-xl">
-                <FontAwesomeIcon icon={faClose} />
-              </button>
-            </div>
-            <div className="social-register">
-              <button className="social-button apple">
-                <FontAwesomeIcon icon={faApple} className="social-icons" />
-              </button>
-              <button className="social-button facebook">
-                <FontAwesomeIcon icon={faFacebookF} className="social-icons" />
-              </button>
-              <button className="social-button google">
-                <img src={googleLogo} alt="" className="social-icons" />
-              </button>
-            </div>
-            <p className="or-text">or register with email</p>
-
-            <div className="form-group">
-              <label htmlFor="email">Email address</label>
-              <Field type="email" name="email" id="email" />
-              <ErrorMessage
-                name="email"
-                component="div"
-                className="error-message"
-              />
-              {touched.email && !errors.email && (
-                <span className="email-check-icon">
-                  <FontAwesomeIcon icon={faCheck} />
-                </span>
-              )}
-            </div>
-            <div className="form-group pb-2">
-              <label htmlFor="password">Password</label>
-              <div className="password-input">
-                <Field
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  id="password"
-                />
-                <div className="password-icons">
-                  {touched.password && !errors.password && (
-                    <span className="check-icon">
-                      <FontAwesomeIcon icon={faCheck} />
-                    </span>
-                  )}
-                  <button type="button" onClick={togglePasswordVisibility}>
-                    <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+              <div className="header">
+                <div className="auth-buttons">
+                  <button className="register-button pb-3">Register</button>
+                  <button
+                    className="log-in-button pb-3"
+                    onClick={handleGoToLogin}
+                  >
+                    Log in
                   </button>
                 </div>
+                <button className="close-button pb-3 text-xl">
+                  <FontAwesomeIcon icon={faClose} />
+                </button>
               </div>
-              <ErrorMessage
-                name="password"
-                component="div"
-                className="error-message"
-              />
-              <p className="password-info">8+ characters</p>
-            </div>
-            <button
-              type="submit"
-              className="create-account-button"
-              disabled={isSubmitting}
-              onClick={handleNextStep}
-            >
-              Create account
-            </button>
-            <div className="checkbox-group">
-              <Field type="checkbox" name="newsletter" id="newsletter" />
-              <label htmlFor="newsletter">Send me news and promotions</label>
-            </div>
-            <p className="terms-and-conditions">
-              By continuing I agree with the <a href="#">Terms & Conditions</a>,
-              <br />
-              <a href="#">Privacy Policy</a>
-            </p>
+              <div className="social-register">
+                <button className="social-button apple">
+                  <FontAwesomeIcon icon={faApple} className="social-icons" />
+                </button>
+                <button className="social-button facebook">
+                  <FontAwesomeIcon
+                    icon={faFacebookF}
+                    className="social-icons"
+                  />
+                </button>
+                <button className="social-button google">
+                  <img src={googleLogo} alt="" className="social-icons" />
+                </button>
               </div>
-            
+              <p className="or-text">or register with email</p>
+
+              <div className="form-group">
+                <Field type="email" name="email" id="email" className="input" />
+                <i htmlFor="email">Email address</i>
+                <ErrorMessage
+                  name="email"
+                  component="div"
+                  className="error-message"
+                />
+                {touched.email && !errors.email && (
+                  <span className="email-check-icon">
+                    <FontAwesomeIcon icon={faCheck} />
+                  </span>
+                )}
+              </div>
+              <div className="form-group pb-2">
+                <div className="password-input">
+                  <Field
+                    type={showPassword ? "text" : "password"}
+                    name="password"
+                    id="password"
+                    className="input"
+                  />
+                  <i htmlFor="password">Password</i>
+                  <div className="password-icons">
+                    {touched.password && !errors.password && (
+                      <span className="check-icon">
+                        <FontAwesomeIcon icon={faCheck} />
+                      </span>
+                    )}
+                    <button type="button" onClick={togglePasswordVisibility}>
+                      <FontAwesomeIcon
+                        icon={showPassword ? faEyeSlash : faEye}
+                      />
+                    </button>
+                  </div>
+                </div>
+                <ErrorMessage
+                  name="password"
+                  component="div"
+                  className="error-message"
+                />
+                <p className="password-info">8+ characters</p>
+              </div>
+              <button
+                type="submit"
+                className="create-account-button"
+                disabled={isSubmitting}
+              >
+                Create account
+              </button>
+              <div className="checkbox-group">
+                <Field type="checkbox" name="newsletter" id="newsletter" />
+                <label htmlFor="newsletter">Send me news and promotions</label>
+              </div>
+              <p className="terms-and-conditions">
+                By continuing I agree with the{" "}
+                <a href="#">Terms & Conditions</a>,
+                <br />
+                <a href="#">Privacy Policy</a>
+              </p>
+            </div>
           </Form>
         )}
       </Formik>
