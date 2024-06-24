@@ -95,12 +95,6 @@ const LoginForm = () => {
                       />
                     </button>
                   </div>
-                </div>
-                <div className="password-icons">
-                  <button type="button" onClick={togglePasswordVisibility}>
-                    <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
-                  </button>
-                </div>
               </div>
               <button
                 type="submit"
