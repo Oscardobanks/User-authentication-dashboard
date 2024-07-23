@@ -60,8 +60,6 @@ const RegistrationForm = ({ handleNextStep }) => {
             setSubmitting(false);
           } catch (error) {
             let errorMessage = error.message;
-
-            // Extract the user-friendly message from Firebase error codes
             if (error.code === "auth/email-already-in-use") {
               errorMessage = "Email address is already in use.";
             } else if (error.code === "auth/weak-password") {
